@@ -25,29 +25,47 @@
 .rhythmFeedback[data-judgment="miss"]{color:#f7acbb}
 @media(max-width:600px){.scene.playing{min-height:max(78dvh,515px)}.rhythm{padding:10px 8px}.rhythm .actions{margin:5px 0}.rhythmGuide{font-size:13px}}
 
-.scene.battle-screen{min-height:max(min(72vh,650px),540px)}
-.battle{position:absolute;inset:0;z-index:6;display:none;flex-direction:column;align-items:center;gap:10px;overflow:auto;padding:18px;background:radial-gradient(ellipse at 50% 10%,#614c7e,#1d1830 75%);color:#fff}
-.battle.active{display:flex}
-.battle h2{margin:2px 0;font-size:clamp(21px,4vw,28px);text-align:center}
-.battleSub{margin:0;text-align:center;color:#e4d6ef;font-size:14px}
-.battleStage{width:min(100%,520px);display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0}
-.combatant{padding:12px;border:1px solid #ffffff35;border-radius:16px;background:#ffffff10;text-align:center}
-.combatantEmoji{font-size:clamp(34px,8vw,54px);height:58px}
-.combatantName{display:block;font-weight:800;font-size:14px;margin-bottom:7px}
-.combatant progress{width:100%;height:10px;accent-color:#f4c271}
-.combatant .enemyBar{accent-color:#ef849a}
-.combatant small{display:block;color:#e5d9ed;font-size:12px;margin-top:3px}
-.battleLog{width:min(100%,520px);min-height:74px;margin:0;padding:14px;border-radius:14px;background:#fffaf3;color:#38283d;font-size:16px;line-height:1.45}
-.battleMoves{width:min(100%,520px);display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.battleMoves button{min-height:52px;padding:10px;background:#704c94;text-align:left;font-size:14px}
-.battleMoves button small{display:block;color:#e9d8f2;font-weight:500;font-size:12px;margin-top:3px}
-.battleMoves button:disabled{opacity:.42;cursor:default}
-.battleEnd{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
-.battleEnd[hidden]{display:none}
-.battleEnd button{min-height:44px}
-.battleTip{margin:0;color:#dfcfe6;text-align:center;font-size:13px}
-.battleEnemy{filter:drop-shadow(0 0 22px #ff879544)}
-@media(max-width:600px){.scene.battle-screen{min-height:max(78dvh,530px)}.battle{padding:12px 9px;gap:7px}.battleStage{margin:4px 0}.combatant{padding:9px 7px}.battleLog{font-size:14px;min-height:68px;padding:11px}.battleMoves{gap:6px}.battleMoves button{min-height:54px;padding:8px;font-size:13px}.battleMoves button small{font-size:11px}}
+.scene.battle-screen{min-height:0}
+.battle-screen .dialogue,.battle-screen>.characters{display:none}
+.battle{display:none;position:relative;z-index:6;padding:clamp(8px,2.5vw,22px);gap:8px;background:#0d1829;color:#f4f5ff;font:700 15px/1.4 ui-monospace,monospace}
+.battle.active{display:grid}
+.battleFrame{border:2px solid #b5c9ec;border-radius:6px;background:linear-gradient(150deg,#203c64,#12253f 75%);box-shadow:inset 0 0 0 2px #0a172c,0 2px 0 #050c17}
+.battleHeader{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 13px}
+.battle h2,.battle h3,.battle p{margin:0}
+.battle h2{font-size:clamp(15px,3.5vw,22px)}
+.battle h3{font-size:13px;color:#c0d6f4}
+.battle button{border-radius:3px;color:inherit;background:#193353;font:inherit}
+.battle button:hover,.battle button:focus-visible{background:#365983}
+.battle button:focus-visible{outline:2px solid #fad78c;outline-offset:-2px}
+.battleSound{padding:7px 9px;white-space:nowrap;font-size:12px!important}
+.battleStage{position:relative;isolation:isolate;display:grid;justify-items:center;align-content:end;min-height:clamp(180px,31vh,275px);padding:12px;overflow:hidden;background:linear-gradient(180deg,#151e3b,#505071 65%,#263039 65%,#131b2a)}
+.battleStage::before{content:"";position:absolute;z-index:-1;inset:11% 0 26%;background:repeating-linear-gradient(90deg,transparent 0 17px,#ebc57955 18px 21px,transparent 22px 34px),linear-gradient(#23263c,#262c46);clip-path:polygon(0 29%,9% 29%,9% 0,20% 0,20% 34%,29% 34%,29% 55%,39% 55%,39% 39%,48% 39%,48% 61%,62% 61%,62% 31%,74% 31%,74% 4%,87% 4%,87% 33%,94% 33%,94% 19%,100% 19%,100% 100%,0 100%)}
+.battleStage::after{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 50% 80%,#edbb7b42,transparent 47%),repeating-linear-gradient(0deg,#060d1614 0 1px,transparent 1px 4px);pointer-events:none}
+.battleSprite{position:relative;width:106px;height:120px;margin:2px 0 10px;filter:drop-shadow(0 5px 0 #060b18aa);transition:transform .18s,filter .18s}
+.battleSprite::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#292b47 0 29%,#515676 29% 43%,#3c3f5b 43% 75%,#22273e 75%);clip-path:polygon(34% 0,66% 0,66% 6%,76% 6%,76% 20%,83% 20%,83% 45%,93% 45%,93% 60%,100% 60%,100% 89%,85% 89%,85% 100%,15% 100%,15% 89%,0 89%,0 60%,7% 60%,7% 45%,17% 45%,17% 20%,24% 20%,24% 6%,34% 6%)}
+.battleSprite::after{content:"";position:absolute;inset:25% 25% 39%;background:linear-gradient(#151b31 0 18%,#b09caa 18% 40%,#282537 40% 59%,#a0727b 59% 72%,#171e32 72%);clip-path:polygon(7% 0,93% 0,93% 63%,81% 63%,81% 82%,65% 82%,65% 100%,35% 100%,35% 82%,19% 82%,19% 63%,7% 63%)}
+.battle[data-phase="2"] .battleSprite{transform:scale(1.07);filter:drop-shadow(0 0 13px #f56a75a6)}
+.battleEnemyInfo{width:min(100%,285px);padding:6px 11px;background:#101a2be8;border:1px solid #7885a6;border-radius:3px}
+.battleReadout{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.battleReadout small{white-space:nowrap;color:#dbe8ff;font-size:12px}
+.battle progress{display:block;width:100%;height:6px;margin-top:5px;accent-color:#7ae7bf}
+.battle progress.enemyBar{accent-color:#ff8b9f}
+.battleLog{padding:10px 13px;min-height:74px}
+.battleIntent{display:block;color:#ffda95;font-size:13px;margin-bottom:3px}
+.battleIntent[hidden]{display:none}
+.battleControls{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:8px}
+.battlePanel{min-width:0;padding:9px}
+.battleMoves,.battleEnd{display:grid;gap:3px;margin-top:6px}
+.battleMoves[hidden],.battleEnd[hidden]{display:none}
+.battleMoves button,.battleEnd button{display:grid;grid-template-columns:16px 1fr;align-items:center;text-align:left;min-height:33px;padding:5px 7px;line-height:1.2}
+.battleMoves button::before,.battleEnd button::before{content:"›";color:#ffdc90;visibility:hidden}
+.battleMoves button:focus-visible::before,.battleMoves button:hover::before,.battleEnd button:focus-visible::before,.battleEnd button:hover::before{visibility:visible}
+.battleMoves button:disabled{color:#a8b7cb;background:#192c46;cursor:default}
+.battleMoves button small{grid-column:2;font-weight:500;font-size:11px;color:#c9d9ef}
+.battleParty h3{margin-bottom:10px}
+.battleParty .battleReadout{margin-top:8px}
+.battleParty p{margin-top:8px;color:#c9d9ef;font-size:12px}
+@media(max-width:510px){.battle{font-size:13px;gap:6px}.battleControls{grid-template-columns:1fr}.battleParty{grid-row:1;display:grid;grid-template-columns:1fr 1fr;column-gap:12px}.battleParty h3{grid-column:1/-1;margin:0}.battleParty progress{grid-column:1}.battleParty .battleReadout{margin-top:4px}.battleParty p{margin-top:4px}.battleMoves{grid-template-columns:1fr 1fr}.battleMoves button{min-height:42px}.battleStage{min-height:174px}.battleSprite{height:98px;width:86px}}
 </style></head><body><main class="app"><div class="game"><header><div>ЭДИК <span>♥</span> КРИСТИНА</div><span>ИСТОРИЯ О ВСТРЕЧЕ</span></header><section class="scene" id="scene"><div class="sun"></div><div class="hill"></div><div class="characters"><div class="person"><div class="head"></div><div class="body"></div><div class="legs"></div><div class="name">Эдик</div></div><div class="person k"><div class="head"></div><div class="body"></div><div class="legs"></div><div class="name">Кристина</div></div></div><div class="heart">💋</div><div class="family"><div>Эдик и Кристина</div><div style="font-size:55px">👨🏻‍🦱 ♥ 👩🏼</div><div class="kids">👧🏼 👦🏻 👧🏼 👦🏻 👧🏼<br>👦🏻 👧🏼 👦🏿 👧🏼 👦🏻</div><div>Их десять чудесных детей</div></div>
 <div class="rhythm" id="rhythm" aria-labelledby="rhythmTitle">
   <h2 id="rhythmTitle">Эдик на сцене</h2>
@@ -74,37 +92,48 @@
 </div>
 
 <section class="battle" id="battle" aria-labelledby="battleTitle">
-  <h2 id="battleTitle">Случайная встреча</h2>
-  <p class="battleSub">Пошаговая схватка · выбери действие</p>
-  <div class="battleStage">
-    <div class="combatant">
-      <div class="combatantEmoji">🧑🏻‍🦱</div>
-      <span class="combatantName">Эдик · решимость</span>
-      <progress id="heroBar" max="100" value="100" aria-label="Решимость Эдика"></progress>
-      <small id="heroStat">100 / 100</small>
-    </div>
-    <div class="combatant">
-      <div class="combatantEmoji battleEnemy">🕶️</div>
-      <span class="combatantName">Сталкер · натиск</span>
-      <progress id="foeBar" class="enemyBar" max="130" value="130" aria-label="Натиск сталкера"></progress>
-      <small id="foeStat">130 / 130</small>
+  <div class="battleHeader battleFrame">
+    <h2 id="battleTitle">Бой в переулке</h2>
+    <button class="battleSound" id="battleSound" type="button" aria-pressed="true">Музыка: вкл</button>
+  </div>
+  <div class="battleStage battleFrame">
+    <div class="battleSprite" aria-hidden="true"></div>
+    <div class="battleEnemyInfo">
+      <div class="battleReadout"><span>Преследователь</span><small id="foeStat"></small></div>
+      <progress id="foeBar" class="enemyBar" aria-label="Натиск преследователя"></progress>
     </div>
   </div>
-  <p class="battleLog" id="battleLog" aria-live="polite"></p>
-  <div class="battleMoves" id="battleMoves">
-    <button data-move="counter">Контратака<small>Сбить натиск · урон по решимости 32</small></button>
-    <button data-move="dodge">Шаг в сторону<small>Снизить натиск на 15 и уклониться</small></button>
-    <button data-move="call">Позвать охрану<small>Снизить натиск на 27 и получить поддержку</small></button>
-    <button data-move="team" id="teamMove" disabled>Слаженный манёвр<small>Нужна поддержка Кристины · натиск −51</small></button>
+  <div class="battleLog battleFrame" aria-live="polite" aria-atomic="true">
+    <strong id="battleIntent" class="battleIntent"></strong>
+    <p id="battleLog"></p>
   </div>
-  <div class="battleEnd" id="battleEnd" hidden>
-    <button id="battleRetry">Попробовать ещё раз</button>
-    <button id="battleContinue">Продолжить историю</button>
+  <div class="battleControls">
+    <div class="battlePanel battleFrame">
+      <h3>Команды</h3>
+      <div class="battleMoves" id="battleMoves">
+        <button type="button" data-move="counter">Контратака<small>Ловит быстрый выпад</small></button>
+        <button type="button" data-move="guard">Защита<small>Блокирует сильный натиск · +1 ОП</small></button>
+        <button type="button" data-move="rally">Поддержка Кристины<small>Срывает финт · +1 ОП</small></button>
+        <button type="button" data-move="team" id="teamMove">Двойной манёвр<small>Сильно сбивает натиск · 2 ОП</small></button>
+        <button type="button" data-move="recover" id="recoverMove">Передышка<small>+35 решимости · один раз за бой</small></button>
+      </div>
+      <div class="battleEnd" id="battleEnd" hidden>
+        <button type="button" id="battleRetry">Попробовать ещё раз</button>
+        <button type="button" id="battleContinue">Продолжить историю</button>
+      </div>
+    </div>
+    <div class="battleParty battlePanel battleFrame">
+      <h3>Эдик и Кристина</h3>
+      <div class="battleReadout"><span>Решимость</span><small id="heroStat"></small></div>
+      <progress id="heroBar" aria-label="Решимость Эдика"></progress>
+      <div class="battleReadout"><span>Очки поддержки</span><small id="supportStat"></small></div>
+      <p id="battleRound"></p>
+    </div>
   </div>
-  <p class="battleTip">Охрана уже вызвана. Твоя задача — вывести вас к людному месту.</p>
 </section>
 <div class="dialogue" aria-live="polite"><div class="speaker" id="speaker"></div><div class="text" id="text"></div><div class="choices" id="choices"></div></div></section><div class="hint">Выбирай реплики, чтобы продолжить историю.</div></div></main>
 <audio id="song" preload="none" src="flowers.mp3"></audio>
+<audio id="battleSong" preload="none" loop></audio>
 <script>
 const scenes={start:{who:'Рассказчик',text:'Тёплым вечером Эдик замечает в парке Кристину. Она ищет что-то в траве рядом со скамейкой.',choices:[['Предложить помощь','help'],['Пошутить, чтобы подбодрить','joke'],['Молча уйти','lost']]},help:{who:'Эдик',text:'Привет! Похоже, ты что-то потеряла. Давай поищем вместе?',choices:[['Осмотреть траву','found']]},joke:{who:'Эдик',text:'Если ищешь сокровище, я готов быть твоим пиратом на подхвате!',choices:[['Помочь с поисками','found']]},found:{who:'Кристина',text:'Я уронила любимый значок. О, вот он! Спасибо. Меня зовут Кристина.',choices:[['«Я Эдик. Рад, что нашёлся!»','meet'],['«Такое сокровище нельзя терять!»','meet']]},meet:{who:'Рассказчик',text:'Они разговорились, а солнце тем временем начало садиться. Кристина предложила немного прогуляться.',choices:[['Пойти к пруду','pond'],['Купить мороженое','ice'],['Весь вечер говорить только о себе','lost_self']]},pond:{style:'pond',who:'Кристина',text:'Здесь так красиво. Знаешь, мне нравятся люди, с которыми можно просто помолчать.',choices:[['«Мне с тобой легко»','bond'],['«Давай загадаем желание»','bond']]},ice:{style:'cafe',who:'Кристина',text:'Фисташковое или клубничное? Кажется, это самое важное решение вечера!',choices:[['Выбрать фисташковое','bond'],['Выбрать клубничное','bond']]},bond:{who:'Рассказчик',text:'Вечер пролетел незаметно. Эдик и Кристина договорились встретиться снова — и ещё много раз после этого.',choices:[['Продолжить','rain']]},rain:{style:'rain',who:'Рассказчик',text:'На следующей встрече начался летний дождь. Кристина рассмеялась и спряталась под навесом, а у Эдика оказался только один зонт.',choices:[['Предложить Кристине укрыться вместе','umbrella'],['Забрать зонт и убежать одному','lost_rain']]},umbrella:{style:'rain',who:'Кристина',text:'Спасибо! А у меня есть идея: рядом проходит вечерний фестиваль. Пойдём посмотрим?',choices:[['С удовольствием!','festival'],['Мне всё равно, решай сама','festival']]},festival:{style:'festival',who:'Рассказчик',text:'На фестивале они увидели бумажные фонарики, танцы и маленькую лавку с цветами. Кристина остановилась у лавки.',choices:[['Подарить ей ромашку','flower'],['Пригласить её на танец','dance'],['Насмехаться над её интересом','lost_rude']]},flower:{style:'festival',who:'Кристина',text:'Ромашка! Как ты догадался, что они мне нравятся? Я сохраню её на память.',choices:[['Послушать музыку','sing']]},dance:{style:'festival',who:'Кристина',text:'Я не очень умею танцевать, но с тобой готова попробовать!',choices:[['Послушать музыку','sing']]},sing:{style:'festival',who:'Кристина',text:'Я обожаю петь! Смотри, здесь открытый микрофон. Немного волнуюсь, но хочу попробовать.',choices:[['Поддержать Кристину','stage'],['Сказать, что петь ей не стоит','lost_sing']]},stage:{style:'festival',who:'Рассказчик',text:'Кристина поёт на маленькой сцене. Эдик аплодирует громче всех, а после выступления они идут гулять вдоль московских улиц.',choices:[['Эдик выходит на сцену','musicIntro']]},musicIntro:{style:'festival',who:'Эдик',text:'А теперь моя очередь! Я хочу спеть для тебя «Цветы» Тёмного принца. Помоги мне попасть в ритм!',choices:[['Начать музыкальную игру','rhythmGame']]},city:{style:'moscow',who:'Кристина',text:'Я люблю Москву: её огни, старые улочки и то, что каждый вечер может стать приключением. А ты?',choices:[['«Я тоже люблю Москву!»','prince']]},prince:{style:'moscow',who:'Эдик',text:'Очень! А ещё я люблю Тёмного принца. В нём есть что-то загадочное — можно целую историю придумать.',choices:[['Предложить придумать историю вместе','tale'],['Спросить Кристину о её песнях','tale']]},tale:{style:'moscow',who:'Кристина',text:'Тогда я придумаю песню о Тёмном принце, который однажды заблудился в Москве. А ты поможешь с сюжетом!',choices:[['Договорились!','dream']]},lost_sing:{style:'festival',who:'Рассказчик',text:'Кристину расстроило, что Эдик не поддержал её увлечение. Она решила продолжить вечер с друзьями.',choices:[['Попробовать снова','start']]},dream:{style:'moscow',who:'Эдик',text:'Я мечтаю о доме, где всегда слышны смех и музыка. А ты?',choices:[['Выслушать Кристину','answer']]},answer:{style:'moscow',who:'Кристина',text:'Я тоже мечтаю о большой дружной семье и путешествиях. Мне кажется, вместе мы могли бы придумать много приключений.',choices:[['Предложить встретиться снова','date']]},lost:{who:'Рассказчик',text:'Эдик ушёл, так и не познакомившись с Кристиной. Иногда для начала истории нужен всего один шаг навстречу.',choices:[['Попробовать снова','start']]},lost_self:{who:'Рассказчик',text:'Кристина так и не смогла вставить ни слова и вежливо попрощалась. Свидание закончилось раньше, чем началось.',choices:[['Попробовать снова','start']]},lost_rain:{style:'rain',who:'Рассказчик',text:'Эдик убежал с зонтом. Кристина осталась под навесом и решила, что не хочет продолжать знакомство.',choices:[['Попробовать снова','start']]},lost_rude:{who:'Рассказчик',text:'Кристину обидели насмешки. Она попрощалась и ушла с фестиваля. История закончилась.',choices:[['Попробовать снова','start']]},date:{style:'moscow',who:'Кристина',text:'Знаешь, я очень рада, что мы тогда встретились. Можно я тебя поцелую?',choices:[['«Очень даже можно»','kiss']]},kiss:{who:'Рассказчик',text:'Эдик бережно обнял Кристину, и они страстно поцеловались под закатным небом.',style:'moscow kiss',choices:[['А что было потом?','family']]},family:{who:'Рассказчик',text:'Прошли годы. Эдик и Кристина построили счастливую семью, полную смеха, приключений и десяти чудесных детей.',style:'final',choices:[['Прожить историю ещё раз','start']]}};
 
@@ -165,99 +194,179 @@ function show(id){if(id==='rhythmGame'){openRhythm();return}if(id==='battleGame'
 
 
 const battle = document.querySelector('#battle');
+const battleAudio = document.querySelector('#battleSong');
+const battleSound = document.querySelector('#battleSound');
 const heroBar = document.querySelector('#heroBar');
 const foeBar = document.querySelector('#foeBar');
 const heroStat = document.querySelector('#heroStat');
 const foeStat = document.querySelector('#foeStat');
+const supportStat = document.querySelector('#supportStat');
+const battleRound = document.querySelector('#battleRound');
+const battleIntent = document.querySelector('#battleIntent');
 const battleLog = document.querySelector('#battleLog');
 const battleMoves = document.querySelector('#battleMoves');
 const battleEnd = document.querySelector('#battleEnd');
 const teamMove = document.querySelector('#teamMove');
+const recoverMove = document.querySelector('#recoverMove');
 const battleRetry = document.querySelector('#battleRetry');
 const battleContinue = document.querySelector('#battleContinue');
 
-const battleState = {hero: 100, foe: 130, support: 0, round: 0, finished: false};
+const maxResolve = 110;
+const maxPressure = 172;
+const maxSupport = 3;
+const maxRounds = 8;
+const enemyPatterns = [
+  ['quick', 'heavy', 'feint', 'quick'],
+  ['heavy', 'feint', 'quick', 'heavy']
+];
+const enemyAttacks = {
+  quick: {name: 'Быстрый выпад', damage: 28},
+  heavy: {name: 'Сильный натиск', damage: 44},
+  feint: {name: 'Финт', damage: 31}
+};
+const battleActions = {
+  counter: {pressure: {quick: 37, heavy: 20, feint: 11}, block: {quick: 16}, message: 'Эдик контратакует.'},
+  guard: {pressure: {quick: 8, heavy: 15, feint: 4}, block: {quick: 14, heavy: 40}, support: 1, message: 'Эдик встаёт в защиту.'},
+  rally: {pressure: {quick: 10, heavy: 10, feint: 24}, block: {feint: 31}, support: 1, message: 'Кристина подсказывает, куда отойти.'},
+  team: {pressure: {quick: 49, heavy: 52, feint: 32}, block: {quick: 12, heavy: 26}, support: -2, message: 'Эдик и Кристина действуют вместе.'},
+  recover: {pressure: {quick: 0, heavy: 0, feint: 0}, block: {quick: 7, heavy: 7, feint: 7}, heal: 35, message: 'Эдик переводит дыхание.'}
+};
+let battleState;
+let battleMusicEnabled = true;
+
+function currentAttack() {
+  const pattern = enemyPatterns[battleState.phase - 1];
+  return pattern[(battleState.round - battleState.phaseStart) % pattern.length];
+}
 
 function renderBattle() {
+  heroBar.max = maxResolve;
+  foeBar.max = maxPressure;
   heroBar.value = battleState.hero;
   foeBar.value = battleState.foe;
-  heroStat.textContent = battleState.hero + ' / 100';
-  foeStat.textContent = battleState.foe + ' / 130';
-  teamMove.disabled = battleState.support < 1 || battleState.finished;
-  battleMoves.querySelectorAll('button:not(#teamMove)').forEach(button => {
-    button.disabled = battleState.finished;
+  heroStat.textContent = `${battleState.hero} / ${maxResolve}`;
+  foeStat.textContent = `${battleState.foe} / ${maxPressure}`;
+  supportStat.textContent = `${battleState.support} / ${maxSupport}`;
+  battleRound.textContent = `Раунд ${battleState.round + 1} из ${maxRounds} · Фаза ${battleState.phase}/2`;
+  battle.dataset.phase = battleState.phase;
+  battleIntent.hidden = battleState.finished;
+  if (!battleState.finished) battleIntent.textContent = 'Следующий ход противника · ' + enemyAttacks[currentAttack()].name;
+  teamMove.disabled = battleState.support < 2;
+  recoverMove.disabled = battleState.recovered;
+}
+
+function renderBattleSound() {
+  battleSound.setAttribute('aria-pressed', String(battleMusicEnabled));
+  battleSound.textContent = battleMusicEnabled ? 'Музыка: вкл' : 'Музыка: выкл';
+}
+
+function playBattleMusic() {
+  if (!battleAudio.hasAttribute('src')) battleAudio.src = audio.getAttribute('src');
+  battleAudio.play().catch(error => {
+    if (error.name === 'AbortError' || !battleMusicEnabled || battleState.finished) return;
+    battleMusicEnabled = false;
+    renderBattleSound();
   });
 }
 
+function stopBattleMusic() {
+  battleAudio.pause();
+  battleAudio.currentTime = 0;
+}
+
 function openBattle() {
-  Object.assign(battleState, {hero: 100, foe: 130, support: 0, round: 0, finished: false});
-  document.querySelector('#scene').className = 'scene moscow battle-screen';
+  battleState = {hero: maxResolve, foe: maxPressure, support: 0, round: 0, phase: 1, phaseStart: 0, recovered: false, finished: false};
+  scene.className = 'scene moscow battle-screen';
   battle.classList.add('active');
   battleMoves.hidden = false;
   battleEnd.hidden = true;
-  battleLog.textContent = 'Сталкер приближается и пытается вас запугать. Кристина уже вызвала охрану. Выбери ход, чтобы выиграть время и добраться до света.';
+  battleSound.hidden = false;
+  battleLog.textContent = 'Сбей натиск преследователя за восемь ходов. Следи за его намерением и копи очки поддержки.';
   renderBattle();
-  document.querySelector('[data-move="counter"]').focus();
+  renderBattleSound();
+  stopBattleMusic();
+  if (battleMusicEnabled) playBattleMusic();
+  battleMoves.querySelector('button').focus();
 }
 
-function finishBattle(won) {
+function finishBattle(won, lastTurn) {
   battleState.finished = true;
+  stopBattleMusic();
+  battleSound.hidden = true;
   battleMoves.hidden = true;
   battleEnd.hidden = false;
-  battleLog.textContent = won
-    ? 'У сталкера закончился натиск. Он отступает, услышав охрану. Вы с Кристиной в безопасности.'
-    : 'Вы отступили к людям и охране. Кристина вызвала помощь вовремя.';
+  const result = won ? 'Преследователь отступил. Путь к площади свободен.' : 'Кристина нажала SOS, и вы отошли к охране.';
+  battleLog.textContent = `${lastTurn} ${result}`;
   battleContinue.textContent = won ? 'Продолжить прогулку' : 'Продолжить с охраной';
   renderBattle();
   battleContinue.focus();
 }
 
 function battleTurn(move) {
-  if (battleState.finished) return;
-  battleState.round++;
+  const action = battleActions[move];
+  if (battleState.finished || !action || (move === 'team' && teamMove.disabled) || (move === 'recover' && recoverMove.disabled)) return;
 
-  const moves = {
-    counter: {foe: 32, hero: 21, message: 'Эдик делает быструю контратаку. Сталкер теряет уверенность.'},
-    dodge: {foe: 15, hero: 0, message: 'Эдик уходит в сторону. Попытка напугать вас не срабатывает.'},
-    call: {foe: 27, hero: 11, support: 1, message: 'Кристина зовёт охрану. Выиграли время и получили поддержку.'},
-    team: {foe: 51, hero: 14, support: -1, message: 'Слаженный манёвр! Охрана уже совсем близко.'}
-  };
-  const action = moves[move];
-  if (!action || (move === 'team' && battleState.support < 1)) return;
-
-  battleState.foe = Math.max(0, battleState.foe - action.foe);
-  battleState.support = Math.max(0, battleState.support + (action.support || 0));
+  const attack = currentAttack();
+  const pressure = action.pressure[attack];
+  battleState.foe = Math.max(0, battleState.foe - pressure);
+  battleState.support = Math.min(maxSupport, battleState.support + (action.support ?? 0));
+  let summary = action.message + (pressure ? ` Натиск −${pressure}.` : '');
   if (battleState.foe === 0) {
-    renderBattle();
-    battleLog.textContent = action.message;
-    finishBattle(true);
+    finishBattle(true, summary);
     return;
   }
 
-  const foePressure = [19, 22, 18, 23][(battleState.round - 1) % 4];
-  const damage = Math.max(0, foePressure - action.hero);
+  if (action.heal) {
+    battleState.recovered = true;
+    const healed = Math.min(action.heal, maxResolve - battleState.hero);
+    battleState.hero += healed;
+    summary += ` Решимость +${healed}.`;
+  }
+
+  const incoming = enemyAttacks[attack].damage + (battleState.phase === 2 ? 5 : 0);
+  const damage = Math.max(0, incoming - (action.block[attack] ?? 0));
   battleState.hero = Math.max(0, battleState.hero - damage);
-  renderBattle();
-
-  if (battleState.hero === 0) {
-    finishBattle(false);
+  summary += damage ? ` Решимость −${damage}.` : ' Вы устояли.';
+  if (battleState.hero === 0 || battleState.round + 1 === maxRounds) {
+    finishBattle(false, summary);
     return;
   }
 
-  const response = damage === 0
-    ? 'Уворот сработал: ни царапины.'
-    : 'Сталкер давит на нервы, но Кристина уже позвала помощь.';
-  battleLog.textContent = action.message + ' ' + response;
+  battleState.round++;
+  if (battleState.phase === 1 && battleState.foe <= maxPressure / 2) {
+    battleState.phase = 2;
+    battleState.phaseStart = battleState.round;
+    summary += ' Противник усиливает натиск.';
+  }
+  battleLog.textContent = summary;
+  renderBattle();
 }
 
+battleSound.onclick = () => {
+  battleMusicEnabled = !battleMusicEnabled;
+  renderBattleSound();
+  if (battleMusicEnabled) playBattleMusic();
+  else battleAudio.pause();
+};
 battleMoves.addEventListener('click', event => {
   const button = event.target.closest('[data-move]');
-  if (button) battleTurn(button.dataset.move);
+  if (!button) return;
+  battleTurn(button.dataset.move);
+  if (button.disabled && !battleState.finished) battleMoves.querySelector('button').focus();
 });
-battleRetry.onclick = () => show('battleGame');
+battleMoves.addEventListener('keydown', event => {
+  if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+  const commands = [...battleMoves.querySelectorAll('button:enabled')];
+  const index = commands.indexOf(document.activeElement);
+  const direction = event.key === 'ArrowDown' ? 1 : -1;
+  event.preventDefault();
+  commands[(index + direction + commands.length) % commands.length].focus();
+});
+battleRetry.onclick = openBattle;
 battleContinue.onclick = () => {
   battle.classList.remove('active');
   show(battleState.foe === 0 ? 'battleAfter' : 'battleAfterFail');
+  document.querySelector('#choices button').focus();
 };
 
 const audio = document.querySelector('#song');
