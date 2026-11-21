@@ -105,7 +105,15 @@ header>div:first-child{padding-top:4px}
 .battle[data-phase="3"] .battleStage{background:linear-gradient(180deg,#222344,#73556b 65%,#37313d 65%,#151c2a)}
 @media(max-width:600px){.characters{gap:clamp(14px,5vw,44px);padding-top:20px}.person{width:min(39%,175px)}}
 @media(max-width:510px){.battlePartyTitle{grid-column:1/-1;margin:0}}
-</style></head><body><main class="app"><div class="game"><header><div>ЭДИК <span>♥</span> КРИСТИНА</div><div class="chapter" aria-live="polite" aria-atomic="true"><span id="chapterNumber"></span><h1 id="chapterTitle"></h1></div></header><section class="scene" id="scene"><div class="sun"></div><div class="hill"></div><div class="characters">
+
+.gameIdentity{display:grid;justify-items:start;gap:5px}
+.ambientSound{padding:4px 8px;border:1px solid #ffffff52;background:#25182e85;font:600 11px/1.3 system-ui;white-space:nowrap}
+.ambientSound:hover{background:#543965}
+.ambientSound[hidden]{display:none}
+</style></head><body><main class="app"><div class="game"><header><div class="gameIdentity">
+  <div>ЭДИК <span>♥</span> КРИСТИНА</div>
+  <button class="ambientSound" id="ambientSound" type="button" aria-pressed="false" title="Dexey! — «Сорри, испортил тебе праздник»">Включить фон</button>
+</div><div class="chapter" aria-live="polite" aria-atomic="true"><span id="chapterNumber"></span><h1 id="chapterTitle"></h1></div></header><section class="scene" id="scene"><div class="sun"></div><div class="hill"></div><div class="characters">
   <figure class="person">
     <div class="portrait portraitEdik" aria-hidden="true"></div>
     <figcaption>Эдик</figcaption>
@@ -194,6 +202,7 @@ header>div:first-child{padding-top:4px}
   </div>
 </section>
 <div class="dialogue" aria-live="polite"><div class="speaker" id="speaker"></div><div class="text" id="text"></div><div class="choices" id="choices"></div></div></section><div class="hint">Выбирай реплики, чтобы продолжить историю.</div></div></main>
+<audio id="ambientSong" src="ambience.mp3" preload="metadata" loop></audio>
 <audio id="song" preload="none" src="flowers.mp3"></audio>
 <audio id="battleSong" data-track="knight.mp3" preload="none" loop></audio>
 <script>
@@ -489,6 +498,32 @@ const story = {};
 const chapterHeading = document.querySelector('#chapterTitle');
 const chapterNumber = document.querySelector('#chapterNumber');
 let currentChapter = -1;
+const ambientAudio = document.querySelector('#ambientSong');
+const ambientSound = document.querySelector('#ambientSound');
+let ambientEnabled = true;
+
+function renderAmbientSound() {
+  const playing = !ambientAudio.paused;
+  ambientSound.setAttribute('aria-pressed', String(playing));
+  ambientSound.textContent = playing ? 'Выключить фон' : 'Включить фон';
+}
+
+function syncAmbientMusic(inStory) {
+  ambientSound.hidden = !inStory;
+  if (!inStory || !ambientEnabled) {
+    ambientAudio.pause();
+  } else if (ambientAudio.paused) {
+    ambientAudio.play().catch(renderAmbientSound);
+  }
+  renderAmbientSound();
+}
+
+ambientAudio.addEventListener('playing', renderAmbientSound);
+ambientAudio.addEventListener('pause', renderAmbientSound);
+ambientSound.onclick = () => {
+  ambientEnabled = ambientAudio.paused;
+  syncAmbientMusic(true);
+};
 
 function setChapter(index) {
   if (currentChapter === index) return;
@@ -504,11 +539,13 @@ function show(id, moveFocus = true) {
     for (const key of Object.keys(story)) delete story[key];
   }
   if (id === 'rhythmGame') {
+    syncAmbientMusic(false);
     setChapter(scenes.musicIntro.chapter);
     openRhythm();
     return;
   }
   if (id === 'battleGame') {
+    syncAmbientMusic(false);
     setChapter(scenes.encounterIntro.chapter);
     openBattle();
     return;
@@ -518,6 +555,7 @@ function show(id, moveFocus = true) {
   const entry = scenes[id];
   setChapter(entry.chapter);
   scene.className = 'scene ' + (entry.style || '');
+  if (moveFocus) syncAmbientMusic(true);
   document.querySelector('#speaker').textContent = entry.who;
   document.querySelector('#text').textContent = typeof entry.text === 'function' ? entry.text(story) : entry.text;
   const choices = document.querySelector('#choices');
