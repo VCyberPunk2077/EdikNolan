@@ -94,7 +94,7 @@
 <section class="battle" id="battle" aria-labelledby="battleTitle">
   <div class="battleHeader battleFrame">
     <h2 id="battleTitle">Бой в переулке</h2>
-    <button class="battleSound" id="battleSound" type="button" aria-pressed="true">Музыка: вкл</button>
+    <button class="battleSound" id="battleSound" type="button" aria-pressed="false" title="Рыцарь">Включить музыку</button>
   </div>
   <div class="battleStage battleFrame">
     <div class="battleSprite" aria-hidden="true"></div>
@@ -133,7 +133,7 @@
 </section>
 <div class="dialogue" aria-live="polite"><div class="speaker" id="speaker"></div><div class="text" id="text"></div><div class="choices" id="choices"></div></div></section><div class="hint">Выбирай реплики, чтобы продолжить историю.</div></div></main>
 <audio id="song" preload="none" src="flowers.mp3"></audio>
-<audio id="battleSong" preload="none" loop></audio>
+<audio id="battleSong" data-track="knight.mp3" preload="none" loop></audio>
 <script>
 const scenes={start:{who:'Рассказчик',text:'Тёплым вечером Эдик замечает в парке Кристину. Она ищет что-то в траве рядом со скамейкой.',choices:[['Предложить помощь','help'],['Пошутить, чтобы подбодрить','joke'],['Молча уйти','lost']]},help:{who:'Эдик',text:'Привет! Похоже, ты что-то потеряла. Давай поищем вместе?',choices:[['Осмотреть траву','found']]},joke:{who:'Эдик',text:'Если ищешь сокровище, я готов быть твоим пиратом на подхвате!',choices:[['Помочь с поисками','found']]},found:{who:'Кристина',text:'Я уронила любимый значок. О, вот он! Спасибо. Меня зовут Кристина.',choices:[['«Я Эдик. Рад, что нашёлся!»','meet'],['«Такое сокровище нельзя терять!»','meet']]},meet:{who:'Рассказчик',text:'Они разговорились, а солнце тем временем начало садиться. Кристина предложила немного прогуляться.',choices:[['Пойти к пруду','pond'],['Купить мороженое','ice'],['Весь вечер говорить только о себе','lost_self']]},pond:{style:'pond',who:'Кристина',text:'Здесь так красиво. Знаешь, мне нравятся люди, с которыми можно просто помолчать.',choices:[['«Мне с тобой легко»','bond'],['«Давай загадаем желание»','bond']]},ice:{style:'cafe',who:'Кристина',text:'Фисташковое или клубничное? Кажется, это самое важное решение вечера!',choices:[['Выбрать фисташковое','bond'],['Выбрать клубничное','bond']]},bond:{who:'Рассказчик',text:'Вечер пролетел незаметно. Эдик и Кристина договорились встретиться снова — и ещё много раз после этого.',choices:[['Продолжить','rain']]},rain:{style:'rain',who:'Рассказчик',text:'На следующей встрече начался летний дождь. Кристина рассмеялась и спряталась под навесом, а у Эдика оказался только один зонт.',choices:[['Предложить Кристине укрыться вместе','umbrella'],['Забрать зонт и убежать одному','lost_rain']]},umbrella:{style:'rain',who:'Кристина',text:'Спасибо! А у меня есть идея: рядом проходит вечерний фестиваль. Пойдём посмотрим?',choices:[['С удовольствием!','festival'],['Мне всё равно, решай сама','festival']]},festival:{style:'festival',who:'Рассказчик',text:'На фестивале они увидели бумажные фонарики, танцы и маленькую лавку с цветами. Кристина остановилась у лавки.',choices:[['Подарить ей ромашку','flower'],['Пригласить её на танец','dance'],['Насмехаться над её интересом','lost_rude']]},flower:{style:'festival',who:'Кристина',text:'Ромашка! Как ты догадался, что они мне нравятся? Я сохраню её на память.',choices:[['Послушать музыку','sing']]},dance:{style:'festival',who:'Кристина',text:'Я не очень умею танцевать, но с тобой готова попробовать!',choices:[['Послушать музыку','sing']]},sing:{style:'festival',who:'Кристина',text:'Я обожаю петь! Смотри, здесь открытый микрофон. Немного волнуюсь, но хочу попробовать.',choices:[['Поддержать Кристину','stage'],['Сказать, что петь ей не стоит','lost_sing']]},stage:{style:'festival',who:'Рассказчик',text:'Кристина поёт на маленькой сцене. Эдик аплодирует громче всех, а после выступления они идут гулять вдоль московских улиц.',choices:[['Эдик выходит на сцену','musicIntro']]},musicIntro:{style:'festival',who:'Эдик',text:'А теперь моя очередь! Я хочу спеть для тебя «Цветы» Тёмного принца. Помоги мне попасть в ритм!',choices:[['Начать музыкальную игру','rhythmGame']]},city:{style:'moscow',who:'Кристина',text:'Я люблю Москву: её огни, старые улочки и то, что каждый вечер может стать приключением. А ты?',choices:[['«Я тоже люблю Москву!»','prince']]},prince:{style:'moscow',who:'Эдик',text:'Очень! А ещё я люблю Тёмного принца. В нём есть что-то загадочное — можно целую историю придумать.',choices:[['Предложить придумать историю вместе','tale'],['Спросить Кристину о её песнях','tale']]},tale:{style:'moscow',who:'Кристина',text:'Тогда я придумаю песню о Тёмном принце, который однажды заблудился в Москве. А ты поможешь с сюжетом!',choices:[['Договорились!','dream']]},lost_sing:{style:'festival',who:'Рассказчик',text:'Кристину расстроило, что Эдик не поддержал её увлечение. Она решила продолжить вечер с друзьями.',choices:[['Попробовать снова','start']]},dream:{style:'moscow',who:'Эдик',text:'Я мечтаю о доме, где всегда слышны смех и музыка. А ты?',choices:[['Выслушать Кристину','answer']]},answer:{style:'moscow',who:'Кристина',text:'Я тоже мечтаю о большой дружной семье и путешествиях. Мне кажется, вместе мы могли бы придумать много приключений.',choices:[['Предложить встретиться снова','date']]},lost:{who:'Рассказчик',text:'Эдик ушёл, так и не познакомившись с Кристиной. Иногда для начала истории нужен всего один шаг навстречу.',choices:[['Попробовать снова','start']]},lost_self:{who:'Рассказчик',text:'Кристина так и не смогла вставить ни слова и вежливо попрощалась. Свидание закончилось раньше, чем началось.',choices:[['Попробовать снова','start']]},lost_rain:{style:'rain',who:'Рассказчик',text:'Эдик убежал с зонтом. Кристина осталась под навесом и решила, что не хочет продолжать знакомство.',choices:[['Попробовать снова','start']]},lost_rude:{who:'Рассказчик',text:'Кристину обидели насмешки. Она попрощалась и ушла с фестиваля. История закончилась.',choices:[['Попробовать снова','start']]},date:{style:'moscow',who:'Кристина',text:'Знаешь, я очень рада, что мы тогда встретились. Можно я тебя поцелую?',choices:[['«Очень даже можно»','kiss']]},kiss:{who:'Рассказчик',text:'Эдик бережно обнял Кристину, и они страстно поцеловались под закатным небом.',style:'moscow kiss',choices:[['А что было потом?','family']]},family:{who:'Рассказчик',text:'Прошли годы. Эдик и Кристина построили счастливую семью, полную смеха, приключений и десяти чудесных детей.',style:'final',choices:[['Прожить историю ещё раз','start']]}};
 
@@ -190,7 +190,7 @@ Object.assign(scenes, {
 });
 scenes.city.text = 'После фестиваля Эдик и Кристина идут гулять по вечерней Москве. В переулке впереди кто-то преграждает путь.';
 
-function show(id){if(id==='rhythmGame'){openRhythm();return}if(id==='battleGame'){openBattle();return}let s=scenes[id];document.querySelector('#scene').className='scene '+(s.style||'');document.querySelector('#speaker').textContent=s.who;document.querySelector('#text').textContent=s.text;const c=document.querySelector('#choices');c.replaceChildren();for(const [label,next] of s.choices){let b=document.createElement('button');b.textContent=label;b.onclick=()=>show(next);c.appendChild(b)}}
+function show(id){if(id==='rhythmGame'){openRhythm();return}if(id==='battleGame'){openBattle();return}if(id==='city'||id==='encounterIntro')prepareBattleMusic();let s=scenes[id];document.querySelector('#scene').className='scene '+(s.style||'');document.querySelector('#speaker').textContent=s.who;document.querySelector('#text').textContent=s.text;const c=document.querySelector('#choices');c.replaceChildren();for(const [label,next] of s.choices){let b=document.createElement('button');b.textContent=label;b.onclick=()=>show(next);c.appendChild(b)}}
 
 
 const battle = document.querySelector('#battle');
@@ -255,18 +255,22 @@ function renderBattle() {
   recoverMove.disabled = battleState.recovered;
 }
 
+function prepareBattleMusic() {
+  if (battleAudio.hasAttribute('src')) return;
+  battleAudio.preload = 'auto';
+  battleAudio.src = battleAudio.dataset.track;
+}
+
 function renderBattleSound() {
-  battleSound.setAttribute('aria-pressed', String(battleMusicEnabled));
-  battleSound.textContent = battleMusicEnabled ? 'Музыка: вкл' : 'Музыка: выкл';
+  const playing = battleMusicEnabled && !battleAudio.paused;
+  battleSound.setAttribute('aria-pressed', String(playing));
+  battleSound.textContent = playing ? 'Выключить музыку' : 'Включить музыку';
 }
 
 function playBattleMusic() {
-  if (!battleAudio.hasAttribute('src')) battleAudio.src = audio.getAttribute('src');
-  battleAudio.play().catch(error => {
-    if (error.name === 'AbortError' || !battleMusicEnabled || battleState.finished) return;
-    battleMusicEnabled = false;
-    renderBattleSound();
-  });
+  prepareBattleMusic();
+  battleAudio.play().catch(renderBattleSound);
+  renderBattleSound();
 }
 
 function stopBattleMusic() {
@@ -283,9 +287,8 @@ function openBattle() {
   battleSound.hidden = false;
   battleLog.textContent = 'Сбей натиск преследователя за восемь ходов. Следи за его намерением и копи очки поддержки.';
   renderBattle();
-  renderBattleSound();
-  stopBattleMusic();
   if (battleMusicEnabled) playBattleMusic();
+  else renderBattleSound();
   battleMoves.querySelector('button').focus();
 }
 
@@ -342,16 +345,19 @@ function battleTurn(move) {
   renderBattle();
 }
 
+battleAudio.addEventListener('playing', renderBattleSound);
+battleAudio.addEventListener('pause', renderBattleSound);
 battleSound.onclick = () => {
-  battleMusicEnabled = !battleMusicEnabled;
-  renderBattleSound();
+  battleMusicEnabled = battleAudio.paused;
   if (battleMusicEnabled) playBattleMusic();
   else battleAudio.pause();
+  renderBattleSound();
 };
 battleMoves.addEventListener('click', event => {
   const button = event.target.closest('[data-move]');
   if (!button) return;
   battleTurn(button.dataset.move);
+  if (!battleState.finished && battleMusicEnabled && battleAudio.paused) playBattleMusic();
   if (button.disabled && !battleState.finished) battleMoves.querySelector('button').focus();
 });
 battleMoves.addEventListener('keydown', event => {
